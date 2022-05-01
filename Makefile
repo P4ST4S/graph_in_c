@@ -4,7 +4,7 @@ SRC = $(shell find ./ -name "*.c")
 OBJ = $(SRC:.c=.o)
 ECHO = /bin/echo -e
 
-INCLUDE = -I./include/
+INCLUDE = -I./include/ -I./include/lib/
 CFLAGS = -llapin -lsfml-graphics -lsfml-audio -lsfml-window -lsfml-system -lstdc++ -lm -ldl -lpthread -lopencv_imgproc -lopencv_objdetect -lopencv_video -lopencv_core -lavcall -lusb -std=c11
 DEBUG = -g -g3
 W = -W -Wall -Werror
