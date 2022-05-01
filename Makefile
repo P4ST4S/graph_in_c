@@ -1,5 +1,5 @@
 CC = gcc
-NAME = rayon
+NAME = graph
 SRC = $(shell find ./ -name "*.c")
 OBJ = $(SRC:.c=.o)
 ECHO = /bin/echo -e
