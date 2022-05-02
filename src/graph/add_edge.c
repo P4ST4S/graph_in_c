@@ -11,22 +11,22 @@
 
 #include "graph.h"
 
-void add_edge(t_graph *graph, void *dataDest, int srcId, void *dataSrc, int destId)
+void add_edge(t_graph *graph, int dest, int src)
 {
     t_node_graph *node;
 
-    node = add_node(dataDest);
-    node->next = graph->tab_neighbours[srcId].begin;
-    graph->tab_neighbours[srcId].begin = node;
+    if (dest >= graph->nb_vertices || src >= graph->nb_vertices)
+    {
+        write(2, "Error: invalid source or destination index\n", 44);
+        return;
+    }
+    node = add_node(dest, NULL);
+    node->next = graph->tab_neighbours[src].begin;
+    graph->tab_neighbours[src].begin = node;
     if (!graph->oriented)
     {
-        if (!dataSrc)
-        {
-            write(2, "Error: dataSrc is set to NULL but graph is not oriented\n", 57);
-            return;
-        }
-        node = add_node(dataSrc);
-        node->next = graph->tab_neighbours[destId].begin;
-        graph->tab_neighbours[destId].begin = node;
+        node = add_node(src, NULL);
+        node->next = graph->tab_neighbours[dest].begin;
+        graph->tab_neighbours[dest].begin = node;
     }
 }

@@ -12,6 +12,7 @@
 #ifndef __GRAPH_H__
 #define __GRAPH_H__
 
+#include <lapin.h>
 #include <stdbool.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -26,12 +27,24 @@
 void std_memcpy(void *dest, void *src, size_t n);
 
 /**
+ * @brief function that copy src pixelarray in
+ * target pixelarray
+ *
+ * @param target the target pixelarray
+ * @param src the source pixelarray
+ * @param pos position of the blit, NULL if you
+ * want it in (0, 0)
+ */
+void std_blit(t_bunny_pixelarray *target, const t_bunny_pixelarray *src, const t_bunny_position *pos);
+
+/**
  * @brief graph node (vertices)
  *
  */
 typedef struct s_node_graph
 {
-    void *data;
+    int linkedIdx;
+    t_bunny_pixelarray *data;
     struct s_node_graph *next;
 } t_node_graph;
 
@@ -41,7 +54,7 @@ typedef struct s_node_graph
  */
 typedef struct s_adjency_graph
 {
-    node_graph *begin;
+    struct s_node_graph *begin;
 } t_adjency_graph;
 
 /**
@@ -59,7 +72,8 @@ typedef struct s_graph
  * @brief new graph function
  *
  * @param vertices number of vertices
- * @param oriented true if graph is oriented, false if not
+ * @param oriented true if graph is oriented,
+ * false if not
  * @return new Graph element
  * @return NULL on error
  */
@@ -75,13 +89,14 @@ t_graph *new_graph(int vertices, bool oriented);
 bool is_empty_graph(t_graph *graph);
 
 /**
- * @brief function for add node to graph
+ * @brief function that create new node
  *
- * @param data the data you want to add
- * @return new node
- * @return NULL on error
+ * @param idx index of new node
+ * @param data pixelarray for adventure,
+ * NULL if you don't want to add one
+ * @return t_node_graph* new_node
  */
-t_node_graph *add_node(void *data);
+t_node_graph *add_node(int idx, t_bunny_pixelarray *data);
 
 /**
  * @brief function for erase your graph
@@ -91,14 +106,34 @@ t_node_graph *add_node(void *data);
 void erase_graph(t_graph *graph);
 
 /**
- * @brief the function that will add node to edge
+ * @brief the function that will add node to edge,
+ * if not oriented, source and destination is not
+ * important
  *
  * @param graph the graph you want to modify
- * @param dataDest the data of destination
- * @param srcId the source index (form 0)
- * @param dataSrc the data of source, if graph is oriented set to NULL
- * @param destId the destination index, if graph is not oriented set to 0
+ * @param dest the destination index
+ * @param src the source index
  */
-void add_edge(t_graph *graph, void *dataDest, int srcId, void *dataSrc, int destId);
+void add_edge(t_graph *graph, int dest, int src);
+
+/**
+ * @brief function for print your graph
+ *
+ * @param graph the graph you want to print
+ */
+void print_graph(t_graph *graph);
+
+/**
+ * @brief function that add pixelarray to a
+ * graph
+ *
+ * @param graph graph wher eyou want to stock
+ * your pixelarray
+ * @param idx index of the vertice where you
+ * want to stock
+ * @param data the pixelarray that you want to
+ * stock
+ */
+void add_pixelarray(t_graph *graph, int idx, t_bunny_pixelarray *data);
 
 #endif /* __GRAPH_H__ */

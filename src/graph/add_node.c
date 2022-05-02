@@ -11,7 +11,7 @@
 
 #include "graph.h"
 
-t_node_graph *add_node(void *data)
+t_node_graph *add_node(int idx, t_bunny_pixelarray *data)
 {
     t_node_graph *new_node;
 
@@ -20,7 +20,14 @@ t_node_graph *add_node(void *data)
         write(2, "Error: malloc() of new_node\n", 29);
         exit(EXIT_FAILURE);
     }
-    std_memcpy(new_node->data, data, sizeof(data));
+    new_node->linkedIdx = idx;
     new_node->next = NULL;
+    if (data)
+    {
+        new_node->data = bunny_new_pixelarray(data->clipable.buffer.width, data->clipable.buffer.height);
+        std_blit(new_node->data, data, NULL);
+    }
+    else
+        new_node->data = NULL;
     return (new_node);
 }
