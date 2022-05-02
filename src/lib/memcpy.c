@@ -1,16 +1,16 @@
 /**
- * @ Author: Antoine ROSPARS
- * @ Create Time: 2022-02-19 17:07:57
- * @ Modified by: Antoine ROSPARS
- * @ Modified time: 2022-02-19 17:11:18
- * @ Copyright: © Antoine ROSPARS - All Rights Reserved.
+ * @file memcpy.c
+ * @author Antoine ROSPARS (antoine.rospars@ecole-89.com)
+ * @brief implementation of memcpy by me
+ * @version 0.1
+ * @date 02-05-2022
+ *
+ * @copyright Copyright (c) 2022
+ *
  */
-
 #include "memcpy.h"
 
-void std_memcpy(void *dest,
-                void *src,
-                size_t n)
+void std_memcpy(void *dest, void *src, size_t n)
 {
     size_t loop;
     char *chain_src;

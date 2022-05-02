@@ -1,9 +1,12 @@
-/*
- ** @ Author: antoine.rospars@ecole-89.com
- ** @ Create Time: 2022-05-01 20:30:15
- ** @ Modified by: Antoine ROSPARS
- ** @ Modified time: 2022-05-01 21:09:25
- ** @ Copyright: 2022 © Antoine ROSPARS / antoine.rospars@ecole-89.com - All Rights Reserved.
+/**
+ * @file graph.h
+ * @author Antoine ROSPARS (antoine.rospars@ecole-89.com)
+ * @brief header file for graph
+ * @version 0.3
+ * @date 02-05-2022
+ *
+ * @copyright Copyright (c) 2022
+ *
  */
 
 #ifndef __GRAPH_H__
@@ -26,31 +29,31 @@ void std_memcpy(void *dest, void *src, size_t n);
  * @brief graph node (vertices)
  *
  */
-typedef struct node_graph
+typedef struct s_node_graph
 {
     void *data;
-    struct node_graph *next;
-} node_graph, *node;
+    struct s_node_graph *next;
+} t_node_graph;
 
 /**
  * @brief adjency graph
  *
  */
-typedef struct adjency_graph
+typedef struct s_adjency_graph
 {
     node_graph *begin;
-} adjency_graph, *adjency;
+} t_adjency_graph;
 
 /**
  * @brief graph structure
  *
  */
-typedef struct graph_element
+typedef struct s_graph
 {
     bool oriented;
     int nb_vertices;
-    adjency tab_neighbours;
-} graph_element, *Graph;
+    t_adjency_graph *tab_neighbours;
+} t_graph;
 
 /**
  * @brief new graph function
@@ -60,7 +63,7 @@ typedef struct graph_element
  * @return new Graph element
  * @return NULL on error
  */
-Graph new_graph(int vertices, bool oriented);
+t_graph *new_graph(int vertices, bool oriented);
 
 /**
  * @brief function for verify if graph is empty or not
@@ -69,7 +72,7 @@ Graph new_graph(int vertices, bool oriented);
  * @return true if is empty
  * @return false if isn't empty
  */
-bool is_empty_graph(Graph graph);
+bool is_empty_graph(t_graph *graph);
 
 /**
  * @brief function for add node to graph
@@ -78,6 +81,24 @@ bool is_empty_graph(Graph graph);
  * @return new node
  * @return NULL on error
  */
-node add_node(void *data);
+t_node_graph *add_node(void *data);
+
+/**
+ * @brief function for erase your graph
+ *
+ * @param graph the graph you want to erase
+ */
+void erase_graph(t_graph *graph);
+
+/**
+ * @brief the function that will add node to edge
+ *
+ * @param graph the graph you want to modify
+ * @param dataDest the data of destination
+ * @param srcId the source index (form 0)
+ * @param dataSrc the data of source, if graph is oriented set to NULL
+ * @param destId the destination index, if graph is not oriented set to 0
+ */
+void add_edge(t_graph *graph, void *dataDest, int srcId, void *dataSrc, int destId);
 
 #endif /* __GRAPH_H__ */

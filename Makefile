@@ -1,5 +1,5 @@
 CC = gcc
-NAME = graph
+NAME = graph_bin
 SRC = $(shell find ./ -name "*.c")
 OBJ = $(SRC:.c=.o)
 ECHO = /bin/echo -e

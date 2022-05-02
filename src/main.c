@@ -10,7 +10,7 @@
 
 int main(void)
 {
-    graph_element *elem;
+    t_graph *elem;
 
     elem = new_graph(5, true);
     return (0);
